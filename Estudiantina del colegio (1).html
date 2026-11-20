@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estudiantina del colegio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{--bg:#f1f5fb;--card:#fff;--ink:#14213d;--mute:#5b6784;--line:#d9e0ee;--gold:#fca311;--pos:#1f8a70;--neg:#c2185b;--hero:#14213d;--herotx:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1424;--card:#18213a;--ink:#eef1f8;--mute:#9aa6c4;--line:#2a3558;--hero:#18213d;--pos:#4cc9a7;--neg:#ff6b9a}}
+:root[data-theme="dark"]{--bg:#0e1424;--card:#18213a;--ink:#eef1f8;--mute:#9aa6c4;--line:#2a3558;--hero:#18213d;--pos:#4cc9a7;--neg:#ff6b9a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 Figtree,system-ui,sans-serif;padding-bottom:84px}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;margin:0}
+header{background:var(--hero);color:var(--herotx);padding:22px 18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+header h1{font-size:28px;font-weight:800;line-height:1.1}
+header p{margin:4px 0 0;opacity:.75;font-size:14px}
+#adm{background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:20px;padding:6px 12px;font:600 13px Figtree,sans-serif;cursor:pointer;white-space:nowrap}
+#adm.on{background:var(--gold);color:#14213d}
+main{max-width:640px;margin:0 auto;padding:16px}
+.sec{display:none}.sec.act{display:block}
+h2{font-size:22px;margin:4px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.rk{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;color:inherit;text-align:left;font:inherit;cursor:pointer;padding:0}
+.pos{font:800 26px "Bricolage Grotesque",sans-serif;width:34px;color:var(--mute)}
+.first .pos{color:var(--gold)}
+.nm{flex:1;font-weight:600;font-size:18px}
+.pt{font:800 30px "Bricolage Grotesque",sans-serif}
+.first{border:2px solid var(--gold)}
+.hist{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;font-size:14px}
+.hist div{display:flex;justify-content:space-between;gap:10px;padding:3px 0}
+.up{color:var(--pos);font-weight:600}.dn{color:var(--neg);font-weight:600}
+.mute{color:var(--mute);font-size:14px}
+form.f{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-width:0}
+input,textarea{flex:1 1 140px}textarea{flex-basis:100%;min-height:64px}
+button.b{background:var(--gold);color:#14213d;border:0;border-radius:10px;padding:9px 16px;font:600 15px Figtree,sans-serif;cursor:pointer}
+button.x{background:none;border:0;color:var(--neg);cursor:pointer;font-size:13px}
+.adm-only{display:none}body.admin .adm-only{display:block}body.admin form.adm-only{display:flex}
+.when{font-weight:600;color:var(--pos);font-size:14px}
+.date{color:var(--mute);font-size:13px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;color:var(--mute);font:600 14px Figtree,sans-serif;padding:10px 4px;border-radius:10px;cursor:pointer}
+nav button.act{color:var(--ink);background:var(--bg);box-shadow:inset 0 -3px 0 var(--gold)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Estudiantina</h1><p>Posiciones, actividades y novedades del colegio</p></div>
+  <button id="adm" type="button">Soy admin</button>
+</header>
+<main>
+  <section id="s-pos" class="sec act">
+    <h2>Tabla de posiciones</h2>
+    <div id="rank"></div>
+    <form class="f card adm-only" id="fp">
+      <select id="pc" aria-label="Curso"></select>
+      <input id="pp" type="number" placeholder="Puntos (+ o -)" required>
+      <input id="pm" placeholder="Motivo" required>
+      <button class="b" type="submit">Cargar puntos</button>
+    </form>
+    <p class="mute">Tocá un curso para ver su historial de puntos.</p>
+  </section>
+  <section id="s-act" class="sec">
+    <h2>Actividades</h2>
+    <div id="acts"></div>
+    <form class="f card adm-only" id="fa">
+      <input id="at" placeholder="Nombre de la actividad" required>
+      <input id="ad" type="date" required>
+      <input id="ah" type="time">
+      <input id="al" placeholder="Lugar">
+      <textarea id="ax" placeholder="Descripción y reglas"></textarea>
+      <button class="b" type="submit">Publicar actividad</button>
+    </form>
+  </section>
+  <section id="s-nov" class="sec">
+    <h2>Novedades</h2>
+    <div id="news"></div>
+    <form class="f card adm-only" id="fn">
+      <input id="nt" placeholder="Título" required>
+      <textarea id="nx" placeholder="Mensaje" required></textarea>
+      <button class="b" type="submit">Publicar novedad</button>
+    </form>
+  </section>
+</main>
+<nav>
+  <button class="act" data-t="pos">Posiciones</button>
+  <button data-t="act">Actividades</button>
+  <button data-t="nov">Novedades</button>
+</nav>
+<script>
+var KEY="estudiantina-prototipo-v3";
+var today=new Date().toISOString().slice(0,10);
+var S={
+ cursos:["1° A","1° B","2° A","2° B","3° A","3° B","4° Naturales","4° Informática","5° Naturales","5° Informática","6° Naturales","6° Informática"].map(function(n){return {n:n,h:[]}}),
+ acts:[{t:"Trivia entre cursos (ejemplo)",d:today,h:"10:00",l:"Patio central",x:"Cada curso manda un equipo de 4. Gana el que más respuestas acierte."}],
+ news:[{t:"Bienvenidos (ejemplo)",x:"Acá van a aparecer los anuncios, cambios de horario y recordatorios.",f:today}]
+};
+try{var raw=localStorage.getItem(KEY);if(raw){S=JSON.parse(raw)}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function total(c){return c.h.reduce(function(a,e){return a+e.p},0)}
+var open=null;
+function fmt(d){if(!d)return"";var p=d.split("-");return p[2]+"/"+p[1]}
+function render(){
+ var r=S.cursos.map(function(c,i){return {c:c,i:i,t:total(c)}}).sort(function(a,b){return b.t-a.t});
+ document.getElementById("rank").innerHTML=r.map(function(x,k){
+  var hist=open===x.i?'<div class="hist">'+x.c.h.slice().reverse().map(function(e){return '<div><span>'+esc(e.m)+' <span class="date">'+fmt(e.f)+'</span></span><span class="'+(e.p>=0?"up":"dn")+'">'+(e.p>0?"+":"")+e.p+'</span></div>'}).join("")+'</div>':"";
+  return '<div class="card'+(k===0?" first":"")+'"><button class="rk" data-i="'+x.i+'" aria-expanded="'+(open===x.i)+'"><span class="pos">'+(k+1)+'</span><span class="nm">'+esc(x.c.n)+'</span><span class="pt">'+x.t+'</span></button>'+hist+'</div>'}).join("");
+ var sel=document.getElementById("pc");var cur=sel.value;
+ sel.innerHTML=S.cursos.map(function(c,i){return '<option value="'+i+'">'+esc(c.n)+'</option>'}).join("");sel.value=cur||"0";
+ var a=S.acts.map(function(x,i){return {x:x,i:i}}).sort(function(p,q){return (p.x.d+p.x.h).localeCompare(q.x.d+q.x.h)});
+ document.getElementById("acts").innerHTML=a.length?a.map(function(o){var x=o.x;return '<div class="card"><h3>'+esc(x.t)+'</h3><div class="when">'+fmt(x.d)+(x.h?" · "+esc(x.h)+" hs":"")+(x.l?" · "+esc(x.l):"")+'</div>'+(x.x?'<p>'+esc(x.x)+'</p>':"")+'<button class="x adm-only" data-da="'+o.i+'">Borrar</button></div>'}).join(""):'<p class="mute">Todavía no hay actividades cargadas.</p>';
+ document.getElementById("news").innerHTML=S.news.length?S.news.map(function(x,i){return '<div class="card"><h3>'+esc(x.t)+'</h3><div class="date">'+fmt(x.f)+'</div><p>'+esc(x.x)+'</p><button class="x adm-only" data-dn="'+i+'">Borrar</button></div>'}).join(""):'<p class="mute">Todavía no hay novedades.</p>';
+}
+document.getElementById("rank").addEventListener("click",function(e){var b=e.target.closest(".rk");if(!b)return;var i=+b.dataset.i;open=open===i?null:i;render()});
+document.getElementById("acts").addEventListener("click",function(e){var d=e.target.dataset.da;if(d!=null&&confirm("¿Borrar esta actividad?")){S.acts.splice(+d,1);save();render()}});
+document.getElementById("news").addEventListener("click",function(e){var d=e.target.dataset.dn;if(d!=null&&confirm("¿Borrar esta novedad?")){S.news.splice(+d,1);save();render()}});
+document.getElementById("fp").addEventListener("submit",function(e){e.preventDefault();var i=+document.getElementById("pc").value,p=parseInt(document.getElementById("pp").value,10);if(isNaN(p)||p===0)return;S.cursos[i].h.push({p:p,m:document.getElementById("pm").value.trim(),f:today});open=i;save();render();e.target.reset();document.getElementById("pc").value=String(i)});
+document.getElementById("fa").addEventListener("submit",function(e){e.preventDefault();S.acts.push({t:at.value.trim(),d:ad.value,h:ah.value,l:al.value.trim(),x:ax.value.trim()});save();render();e.target.reset()});
+document.getElementById("fn").addEventListener("submit",function(e){e.preventDefault();S.news.unshift({t:nt.value.trim(),x:nx.value.trim(),f:today});save();render();e.target.reset()});
+var admBtn=document.getElementById("adm");
+admBtn.addEventListener("click",function(){
+ if(document.body.classList.contains("admin")){document.body.classList.remove("admin");admBtn.classList.remove("on");admBtn.textContent="Soy admin";return}
+ var p=prompt("Clave de administrador (en este prototipo: 1234)");
+ if(p==="1234"){document.body.classList.add("admin");admBtn.classList.add("on");admBtn.textContent="Salir de admin"}else if(p!==null){alert("Clave incorrecta")}
+});
+document.querySelectorAll("nav button").forEach(function(b){b.addEventListener("click",function(){
+ document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("act",x===b)});
+ document.querySelectorAll(".sec").forEach(function(s){s.classList.toggle("act",s.id==="s-"+b.dataset.t)});
+})});
+render();
+</script>
+</body>
+</html>
