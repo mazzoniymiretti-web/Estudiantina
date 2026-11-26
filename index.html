@@ -46,6 +46,7 @@ nav button{flex:1;background:none;border:0;color:var(--mute);font:600 14px Figtr
 nav button.act{color:var(--ink);background:var(--bg);box-shadow:inset 0 -3px 0 var(--gold)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <header>
@@ -94,6 +95,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <script>
 var KEY="estudiantina-prototipo-v3";
 var today=new Date().toISOString().slice(0,10);
+  const SUPABASE_URL = "https://xdzhqmhpniufvmrrpspj.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_OY5VnL3DMbdbPMK3ARvfQg_NAXdlXK6";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 var S={
  cursos:["1° A","1° B","2° A","2° B","3° A","3° B","4° Naturales","4° Informática","5° Naturales","5° Informática","6° Naturales","6° Informática"].map(function(n){return {n:n,h:[]}}),
  acts:[{t:"Trivia entre cursos (ejemplo)",d:today,h:"10:00",l:"Patio central",x:"Cada curso manda un equipo de 4. Gana el que más respuestas acierte."}],
